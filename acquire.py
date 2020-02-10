@@ -9,5 +9,8 @@ entries = {}
 
 for chart_name in rap_charts:
     entries[chart_name] = {}
-    data = bb.ChartData(chart_name, timeout=None)
-    entries[chart_name][data.date]
+    chart = bb.ChartData(chart_name, timeout=None)
+    entries[chart_name][chart.date] = chart.entries
+    while chart.previousDate:
+        chart = bb.ChartData(chart_name, date=chart.previousDate, timeout=None)
+        entries[chart_name][chart.date] = chart.entries
